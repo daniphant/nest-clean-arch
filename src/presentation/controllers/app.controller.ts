@@ -6,8 +6,8 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { Public } from 'application/decorators/public.decorator';
+import { LocalAuthGuard } from 'application/guards/local.guard';
 import { AuthService } from 'application/services/auth.service';
 import { Request } from 'express';
 import { Ok } from 'presentation/response-types/success.types';
@@ -23,7 +23,7 @@ export class AppController {
   }
 
   @Public()
-  @UseGuards(AuthGuard('local'))
+  @UseGuards(new LocalAuthGuard())
   @Post('/auth/login')
   @HttpCode(200)
   async login(@Req() req: Request) {
